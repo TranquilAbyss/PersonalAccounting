@@ -31,6 +31,7 @@ function DataTableModule(name, observer, columns = []) {
             cell.SetValue(dataValue)
             if (!cell.readonly) {
                 cell.children[0].oninput = OnCellChange
+                cell.children[0].onchange = OnCellChange
             }
 
             //setup next cells
@@ -39,8 +40,8 @@ function DataTableModule(name, observer, columns = []) {
         ++row
     })
 
-    module.LoadData = function(data) {
-        if (document.activeElement.id.includes(this.tableName)) {
+    module.LoadData = function(data, force = false) {
+        if (!force && document.activeElement.id.includes(this.tableName)) {
             return
         }
         columns = this.columnObjects
@@ -74,6 +75,7 @@ function DataTableModule(name, observer, columns = []) {
                 cell.SetValue(dataValue)
                 if (!cell.readonly) {
                     cell.children[0].oninput = OnCellChange
+                    cell.children[0].onchange = OnCellChange
                 }
 
                 //setup next cells
@@ -90,6 +92,7 @@ function SetupDataCell(cell, index, column) {
     cell.column = column
     if (!cell.readonly) {
         cell.children[0].oninput = OnCellChange
+        cell.children[0].onchange = OnCellChange
     }
 }
 

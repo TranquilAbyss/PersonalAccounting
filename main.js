@@ -163,15 +163,15 @@ function AccountsModule() {
     module.InsertEle(CreateEle('h2', {innerText: "Categories Accounts"}))
     module.InsertEle(CreateEle('p', {innerText: "Categories in your budget and their balance will automaticly update from transactions"}))
     let catTable = DataTableModule("Cat", categories, [{name:"name", displayName: "Name"}, {name:"total", displayName: "Total"}])
-    categories.Subscribe((data) => catTable.LoadData(data))
-    transactions.Subscribe(() => UpdateCategoryTotal(() => categories.Publish()))
-    categories.Subscribe(() => UpdateCategoryTotal((data) => catTable.LoadData(data)))
+    transactions.Subscribe(() => categories.Publish())
+    categories.Subscribe(() => UpdateCategoryTotal((data) => catTable.LoadData(data))) 
     module.InsertEle(catTable)
     module.InsertEle(CreateEle('h2', {innerText: "Totals Check"}))
     module.InsertEle(CreateEle('p', {innerText: "Automaticly updates to compare financial accounts totals with budgeted categories totals. Can be used to find mistakes in transactions"}))
     let totalTable = DataTableModule("Tot", accountTotals, [{name:"name", displayName: "Name"}, {name:"total", displayName: "Total"}])
     accounts.Subscribe(() => UpdateAccountTotal((data) => totalTable.LoadData(data)))
     categories.Subscribe(() => UpdateAccountTotal((data) => totalTable.LoadData(data)))
+    UpdateAccountTotal((data) => totalTable.LoadData(data))
     module.InsertEle(totalTable)
 
     return module
